@@ -47,9 +47,11 @@ def search(grid,init,goal,cost):
     # Explore available cells with provided cost
     grid[init[0]][init[1]] = 1
     previous_cost = 0
+    # Initialize path
     if len(path) == 0:
         path.append([init[0], init[1], cost])
-
+    
+    # Explore the 4 directions
     for delta_step in delta:
         inc_row = init[0] + delta_step[0];
         inc_col = init[1] + delta_step[1];
