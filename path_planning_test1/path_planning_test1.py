@@ -41,28 +41,30 @@ def print_matrix(matrix):
 
 def search():
     # Buffer to mark closed nodes
-    closed = [[0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0]]
+    closed = []
 
+    for row in range(len(grid)):
+        closed_row = []
+        for col in range(len(grid[0])):
+            closed_row.append(0)
+        closed.append(closed_row)
+       
     # Mark initial point as closed    
     closed[init[0]][init[1]] = 1
 
-    x = init[0]
-    y = init[1]
+    row = init[0]
+    col= init[1]
     g = 0
 
     # Init open list
-    open = [[g, x, y]]
+    open = [[g, row, col]]
 
     # process flags
     found = False
     resign = False
 
     # print('Initial open list')
-    # print_matrix(open)
+    # print_matrirow(open)
 
     # Main iteration
     while found is False and resign is False:    
@@ -77,27 +79,28 @@ def search():
             open.reverse()
             next = open.pop()
 
-            x = next[1]
-            y = next[2]
+            row = next[1]
+            col = next[2]
             g = next[0]
 
             # Check if next node is the goal
-            if x == goal[0] and y == goal[1]:
+            if row == goal[0] and col == goal[1]:
                 found = True
                 print(next)
             # It is not the goal then evaluate movements
             else:
                 # Explore winning node, try to move on all possible directions
                 for i in range(len(delta)):
-                    x2 = x + delta[i][0]
-                    y2 = y + delta[i][1]
+                    row_inc = row + delta[i][0]
+                    col_inc = col + delta[i][1]
                     # Only add nodes within the grid
-                    if x2 >= 0 and y2 >= 0 and x2 < len(grid) and y2 < len(grid[0]):
+                    if row_inc >= 0 and col_inc >= 0 and row_inc < len(grid) and col_inc < len(grid[0]):
                         # Only add nodes on available locations (open and no obstacle)
-                        if closed[x2][y2] == 0 and grid[x2][y2] == 0:
+                        if closed[row_inc][col_inc] == 0 and grid[row_inc][col_inc] == 0:
                             # Update previous cost
-                            g2 = g + cost
-                            open.append([g2, x2, y2])
-                            closed[x2][y2] = 1
+                            g_inc = g + cost
+                            next_step = [g_inc, row_inc, col_inc]
+                            open.append(next_step)
+                            closed[row_inc][col_inc] = 1
 
 search()
