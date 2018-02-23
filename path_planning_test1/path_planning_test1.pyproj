@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>47c1dd95-3f2e-43a5-9cc8-4cbde6d6a12c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>path_planning_test1.py</StartupFile>
+    <StartupFile>path_planning_a_start.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="path_planning_test1.py" />
+    <Compile Include="path_planning_a_start.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="path_planning_expansion.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
