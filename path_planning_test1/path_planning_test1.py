@@ -41,14 +41,23 @@ def print_matrix(matrix):
 
 def search():
     # Buffer to mark closed nodes
+
+    node_index = 0
+    expand = []
     closed = []
 
+    for row in range(len(grid)):
+        expand_row = []
+        for col in range(len(grid[0])):
+            expand_row.append(0)
+        expand.append(expand_row)
+       
     for row in range(len(grid)):
         closed_row = []
         for col in range(len(grid[0])):
             closed_row.append(0)
         closed.append(closed_row)
-       
+
     # Mark initial point as closed    
     closed[init[0]][init[1]] = 1
 
@@ -101,6 +110,18 @@ def search():
                             g_inc = g + cost
                             next_step = [g_inc, row_inc, col_inc]
                             open.append(next_step)
+                            node_index += 1
+                            expand[row_inc][col_inc] = node_index
                             closed[row_inc][col_inc] = 1
 
+    # Set to -1 no expanded locations
+    for row in range(len(expand)):
+        for col in range(len(expand[0])):
+            if expand[row][col] == 0 and not (row == init[0] and col == init[1]):
+                expand[row][col] = -1
+
+    print_matrix("Expand matrix")
+    print_matrix(expand)
+
 search()
+
