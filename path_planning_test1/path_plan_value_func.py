@@ -105,8 +105,53 @@ def compute_value(grid,goal,cost):
     
     return values
 
+def optimum_policy(values, goal):
+
+    # Create policies matrix
+    policies = []
+
+    for row in range(len(values)):
+        policies_row = []
+        for col in range(len(values[0])):
+            policies_row.append(0)
+        policies.append(policies_row)
+
+    # Explore all the cells in the grid
+    for row in range(len(values)):
+        for col in range(len(values[0])):
+            cur_value = values[row][col]
+            min_neightbour_value = 1000
+            min_direction = ' '
+            delta_index = 0
+            
+            # Explore neightbours and point to neightbour with smaller value
+            for step in delta:
+                row_inc = row + step[0]
+                col_inc = col + step[1]
+                            
+                # Is cursor within grid?
+                if row_inc > 0 and row_inc < len(grid) and col_inc > 0 and col_inc < len(grid[0]) and values[row_inc][col_inc] < 99:
+                    neightbour_value = values[row_inc][col_inc]
+                    if min_neightbour_value > neightbour_value:
+                        min_neightbour_value = neightbour_value
+                        min_direction = delta_name[delta_index]
+
+                
+                delta_index += 1
+
+            if values[row][col] < 99:
+                policies[row][col] = min_direction
+            else:
+                policies[row][col] = ' '
+
+    policies[goal[0]][goal[1]] = '*'
+
+    return policies                        
+
 values = compute_value(grid,goal,cost)
 print("Values:")
 print_matrix(values)
-
+policies = optimum_policy(values, goal)
+print("Policies:")
+print_matrix(policies)
 
